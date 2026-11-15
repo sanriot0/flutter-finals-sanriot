@@ -82,6 +82,7 @@ const List<RobloxGame> kRobloxCatalog = [
     icon: Icons.directions_bus,
     likes: '77% Rating',
     players: '12K',
+    assetImage: 'assets/games/croydon.jpg',
   ),
   RobloxGame(
     title: 'TTK Testing',
@@ -92,6 +93,7 @@ const List<RobloxGame> kRobloxCatalog = [
     icon: Icons.shield,
     likes: '91% Rating',
     players: '8.4K',
+    assetImage: 'assets/games/ttk_testing.jpg',
   ),
   RobloxGame(
     title: 'FRONTLINES VERSUS',
@@ -102,6 +104,7 @@ const List<RobloxGame> kRobloxCatalog = [
     icon: Icons.flash_on,
     likes: '82% Rating',
     players: '15.1K',
+    assetImage: 'assets/games/frontlines_versus.jpg',
   ),
   RobloxGame(
     title: 'Blox Fruits',
@@ -110,6 +113,7 @@ const List<RobloxGame> kRobloxCatalog = [
     description: 'Sail across vast oceans and master powerful abilities.',
     bannerColor: Color(0xFF1E88E5),
     icon: Icons.explore,
+    assetImage: 'assets/games/blox_fruits.jpg',
   ),
   RobloxGame(
     title: 'DOORS',
@@ -118,6 +122,7 @@ const List<RobloxGame> kRobloxCatalog = [
     description: 'Navigate through 100 hotel rooms while surviving entities.',
     bannerColor: Color(0xFFB71C1C),
     icon: Icons.door_front_door,
+    assetImage: 'assets/games/doors.jpg',
   ),
   RobloxGame(
     title: 'Pet Simulator 99',
@@ -126,5 +131,6 @@ const List<RobloxGame> kRobloxCatalog = [
     description: 'Hatch thousands of rare eggs and collect coins.',
     bannerColor: Color(0xFF00897B),
     icon: Icons.pets,
+    assetImage: 'assets/games/pet_simulator_99.jpg',
   ),
 ];

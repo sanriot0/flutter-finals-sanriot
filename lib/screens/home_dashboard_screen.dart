@@ -5,6 +5,9 @@ import '../models/roblox_game.dart';
 import '../widgets/review_modal.dart';
 import '../widgets/add_game_modal.dart';
 import '../widgets/game_banner.dart';
+import '../widgets/game_tile.dart';
+import '../models/game_sections.dart';
+import 'all_games_screen.dart';
 
 class HomeDashboardScreen extends StatelessWidget {
   final ValueChanged<int> onNavigateTab;
@@ -32,7 +35,7 @@ class HomeDashboardScreen extends StatelessWidget {
       likes: '91% Rating',
       players: '8.4K',
       badge: 'New Weapons',
-      assetImage: 'assets/games/ttk.jpg',
+      assetImage: 'assets/games/ttk_testing.jpg',
     ),
     RobloxGame(
       title: 'FRONTLINES VERSUS',
@@ -43,7 +46,7 @@ class HomeDashboardScreen extends StatelessWidget {
       icon: Icons.flash_on,
       likes: '82% Rating',
       players: '15.1K',
-      assetImage: 'assets/games/frontlines.jpg',
+      assetImage: 'assets/games/frontlines_versus.jpg',
     ),
     RobloxGame(
       title: 'Ecos: La Brea',
@@ -92,6 +95,49 @@ class HomeDashboardScreen extends StatelessWidget {
     ),
   ];
 
+  /// "Top Trending ->" style row. Tapping the heading/arrow opens every game in the row.
+  Widget _arrowSection(BuildContext context,
+      {required String title, required List<RobloxGame> games}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        InkWell(
+          borderRadius: BorderRadius.circular(8),
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(
+                builder: (_) => AllGamesScreen(title: title, games: games)),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(title,
+                    style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white)),
+                const SizedBox(width: 6),
+                const Icon(Icons.arrow_forward, size: 20, color: Colors.white),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        SizedBox(
+          height: 215,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: games.length,
+            separatorBuilder: (_, __) => const SizedBox(width: 12),
+            itemBuilder: (context, index) =>
+                SizedBox(width: 140, child: GameTile(game: games[index])),
+          ),
+        ),
+      ],
+    );
+  }
+
   /// One Roblox-style row: heading, subtitle, horizontal list of cards.
   Widget _gameSection(
     BuildContext context, {
@@ -105,10 +151,15 @@ class HomeDashboardScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white)),
+        Text(title,
+            style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white)),
         if (subtitle != null) ...[
           const SizedBox(height: 4),
-          Text(subtitle, style: TextStyle(fontSize: 13, color: Colors.grey[400])),
+          Text(subtitle,
+              style: TextStyle(fontSize: 13, color: Colors.grey[400])),
         ],
         const SizedBox(height: 12),
         SizedBox(
@@ -123,7 +174,8 @@ class HomeDashboardScreen extends StatelessWidget {
                 margin: const EdgeInsets.only(right: 12),
                 child: InkWell(
                   borderRadius: BorderRadius.circular(12),
-                  onTap: () => showReviewModal(context: context, preselectedGame: game),
+                  onTap: () =>
+                      showReviewModal(context: context, preselectedGame: game),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -133,14 +185,18 @@ class HomeDashboardScreen extends StatelessWidget {
                         game.title,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 3),
                       Row(
                         children: [
-                          Icon(Icons.thumb_up_alt, size: 13, color: Colors.grey[400]),
+                          Icon(Icons.thumb_up_alt,
+                              size: 13, color: Colors.grey[400]),
                           const SizedBox(width: 4),
-                          Text(game.likes, style: TextStyle(fontSize: 12, color: Colors.grey[400])),
+                          Text(game.likes,
+                              style: TextStyle(
+                                  fontSize: 12, color: Colors.grey[400])),
                         ],
                       ),
                       const SizedBox(height: 4),
@@ -172,7 +228,8 @@ class HomeDashboardScreen extends StatelessWidget {
           // Upper-right add button: add a game with a picture (shows up in Charts)
           IconButton(
             tooltip: 'Add a game',
-            icon: const Icon(Icons.add_circle_outline, color: Color(0xFF00E054)),
+            icon:
+                const Icon(Icons.add_circle_outline, color: Color(0xFF00E054)),
             onPressed: () => showAddGameModal(context: context),
           ),
         ],
@@ -208,12 +265,16 @@ class HomeDashboardScreen extends StatelessWidget {
                   children: [
                     const Text(
                       'WELCOME BACK,',
-                      style: TextStyle(fontSize: 11, color: Color(0xFF00E054), fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 11,
+                          color: Color(0xFF00E054),
+                          fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       user?.email ?? 'Player',
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -221,17 +282,24 @@ class HomeDashboardScreen extends StatelessWidget {
               const SizedBox(height: 18),
               const Text(
                 'LIVE FIRESTORE STATS',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.grey),
+                style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey),
               ),
               const SizedBox(height: 10),
               Row(
                 children: [
-                  Expanded(child: _statCard('Games Logged', '$totalReviews', const Color(0xFF00E054))),
+                  Expanded(
+                      child: _statCard('Games Logged', '$totalReviews',
+                          const Color(0xFF00E054))),
                   const SizedBox(width: 10),
                   Expanded(
                     child: _statCard(
                       'Avg Rating',
-                      totalReviews == 0 ? '—' : '${avgRating.toStringAsFixed(1)} ★',
+                      totalReviews == 0
+                          ? '—'
+                          : '${avgRating.toStringAsFixed(1)} ★',
                       const Color(0xFFFF8000),
                     ),
                   ),
@@ -256,6 +324,13 @@ class HomeDashboardScreen extends StatelessWidget {
                 bannerHeight: 200,
                 listHeight: 300,
               ),
+              const SizedBox(height: 24),
+              _arrowSection(context,
+                  title: 'Top Trending', games: kTrendingGames),
+              const SizedBox(height: 24),
+              _arrowSection(context,
+                  title: 'Up-and-Coming', games: kUpAndComingGames),
+              const SizedBox(height: 16),
             ],
           );
         },
@@ -274,7 +349,9 @@ class HomeDashboardScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(value, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: accent)),
+          Text(value,
+              style: TextStyle(
+                  fontSize: 18, fontWeight: FontWeight.w800, color: accent)),
           const SizedBox(height: 2),
           Text(label, style: TextStyle(fontSize: 11, color: Colors.grey[400])),
         ],
